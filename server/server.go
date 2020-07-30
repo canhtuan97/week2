@@ -3,14 +3,16 @@ package main
 import (
 	"context"
 	"fmt"
+	"io/ioutil"
+	"log"
+	"net"
+
 	"github.com/canhtuan97/week2/application/cart"
 	"github.com/canhtuan97/week2/application/customer"
 	"github.com/canhtuan97/week2/proto/cart"
 	"github.com/canhtuan97/week2/proto/customer"
 	"google.golang.org/grpc"
-	"io/ioutil"
-	"log"
-	"net"
+
 )
 
 type server struct{}
