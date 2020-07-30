@@ -31,13 +31,13 @@ type ConfigurableItemOptions struct {
 
 type Address struct {
 	Region        string   `json:"region"`
-	RegionId      string   `json:"region_id"`
+	RegionId      int   `json:"region_id"`
 	RegionCode    string   `json:"region_code"`
 	CountryId     string   `json:"country_id"`
 	Street        []string `json:"street"`
 	Postcode      string   `json:"postcode"`
 	City          string   `json:"city"`
-	FirstName     string   `json:"first_name"`
+	FirstName     string   `json:"firstname"`
 	LastName      string   `json:"lastname"`
 	CustomerId    int      `json:"customer_id"`
 	Email         string   `json:"email"`

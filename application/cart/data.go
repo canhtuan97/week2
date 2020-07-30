@@ -74,7 +74,7 @@ func EstimateShipping(request *cartPb.EstimateShippingRequest) (*cartPb.Estimate
 	estimateShippingRequest := connector.EstimateShippingRequest{
 		Address: connector.Address{
 			Region:        request.Region,
-			RegionId:      request.RegionId,
+			RegionId:      int(request.RegionId),
 			RegionCode:    request.RegionCode,
 			CountryId:     request.CountryId,
 			Street:        request.Street,
@@ -88,7 +88,7 @@ func EstimateShipping(request *cartPb.EstimateShippingRequest) (*cartPb.Estimate
 			SameAsBilling: 0,
 		},
 	}
-	//fmt.Println(string(request.r))
+
 
 
 	client := connector.NewClient()

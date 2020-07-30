@@ -307,7 +307,7 @@ var (
 
 	pattern_AddItemProduct_AddItemProductConfigurable_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 2, 6}, []string{"rest", "default", "V1", "carts", "mine", "items", "con"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_AddItemProduct_EstimateShipping_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"test"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_AddItemProduct_EstimateShipping_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"rest", "V1", "carts", "mine", "estimate-shipping-methods"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

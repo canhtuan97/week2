@@ -128,7 +128,7 @@ service AddItemProduct{
 
   rpc EstimateShipping(EstimateShippingRequest) returns (EstimateShippingResponse) {
     option (google.api.http) = {
-      post: "/test"
+      post: "/rest/V1/carts/mine/estimate-shipping-methods"
       body: "*"
     };
   }
