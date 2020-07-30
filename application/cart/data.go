@@ -67,36 +67,40 @@ func AddItemProductConfigurable(request *cartPb.AddItemProductConfigurableReques
 
 
 func EstimateShipping(request *cartPb.EstimateShippingRequest) (*cartPb.EstimateShippingResponse,error)  {
-	fmt.Println("EstimateShipping running..")
+
+
+	fmt.Println("EstimateShipping data running..")
+
 	estimateShippingRequest := connector.EstimateShippingRequest{
 		Address: connector.Address{
-			Region:        request.Address.Region,
-			RegionId:      request.Address.RegionId,
-			RegionCode:    request.Address.RegionCode,
-			CountryId:     request.Address.CountryId,
-			Street:        request.Address.Street,
-			Postcode:      request.Address.Postcode,
-			City:          request.Address.City,
-			FirstName:     request.Address.FirstName,
-			LastName:      request.Address.LastName,
-			CustomerId:    int(request.Address.CustomerId),
-			Email:         request.Address.Email,
-			Telephone:     request.Address.Telephone,
+			Region:        request.Region,
+			RegionId:      request.RegionId,
+			RegionCode:    request.RegionCode,
+			CountryId:     request.CountryId,
+			Street:        request.Street,
+			Postcode:      request.Postcode,
+			City:          request.City,
+			FirstName:     request.FirstName,
+			LastName:      request.LastName,
+			CustomerId:    int(request.CustomerId),
+			Email:         request.Email,
+			Telephone:     request.Telephone,
 			SameAsBilling: 0,
 		},
 	}
+	//fmt.Println(string(request.r))
 
-	
+
 	client := connector.NewClient()
-	
-	
+
+
 	data , err := client.Carts.EstimateShipping(estimateShippingRequest)
 	if err != nil {
 		log.Fatalf(" loi cua minh%v", err)
 	}
 
 	resp := prepareDataToResponse(data)
-	
+
 
 	return &cartPb.EstimateShippingResponse{
 		Data: resp,

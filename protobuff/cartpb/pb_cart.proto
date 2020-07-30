@@ -79,7 +79,7 @@ message  Address {
 }
 message EstimateShippingRequest{
   string region = 1;
-  string regionId = 2;
+  int32 regionId = 2;
   string regionCode = 3;
   string countryId = 4 ;
   repeated string street = 5;
