@@ -8,3 +8,7 @@ type Login struct {
 type AccessToken struct {
 	AccessToken string `json:"access_token"`
 }
+
+type QuoteIdResponse struct {
+	QuoteId int `json:"quote_id"`
+}

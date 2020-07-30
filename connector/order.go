@@ -3,7 +3,6 @@ package connector
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 )
 
@@ -54,7 +53,7 @@ func (c Order) CreateOrder(tokenCustomer []string,createOrderRequest CreateOrder
 	if err != nil {
 		log.Fatal(err)
 	}
-	data, err := ioutil.ReadAll(resp.Body)
+
 	createOrderResponse := CreateOrderResponse{}
 	//-------------Đoạn này đang viết check lỗi
 	//data, err := CheckResponse(resp)
@@ -67,7 +66,7 @@ func (c Order) CreateOrder(tokenCustomer []string,createOrderRequest CreateOrder
 	//	log.Fatal(err)
 	//}
 	//--------------------------------------
-	json.Unmarshal(data, &createOrderResponse)
-	fmt.Println(string(data))
+	json.Unmarshal(resp, &createOrderResponse)
+	fmt.Println(string(resp))
 	return &createOrderResponse, nil
 }

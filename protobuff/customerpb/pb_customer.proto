@@ -66,7 +66,7 @@ message  GetQuoteIdCustomerRequest {
 }
 
 message  GetQuoteIdCustomerResponse{
-  int32 quoteId = 2 ;
+  string quoteId = 2 ;
 }
 
 

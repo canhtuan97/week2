@@ -35,22 +35,6 @@ func CreateOrder(ctx  context.Context ,request *orderPb.CreateOrderRequest) (*or
 	}
 
 
-
-
-	//var createOrderRequest connector.CreateOrderRequest
-	//createOrderRequest.PaymentMethod.Method = request.PaymentMethod.Method
-	//createOrderRequest.BillingAddress.Email = request.BillingAddress.Email
-	//createOrderRequest.BillingAddress.Region = request.BillingAddress.Region
-	//createOrderRequest.BillingAddress.RegionId = int(request.BillingAddress.RegionId)
-	//createOrderRequest.BillingAddress.RegionCode = request.BillingAddress.RegionCode
-	//createOrderRequest.BillingAddress.CountryId = request.BillingAddress.CountryId
-	//createOrderRequest.BillingAddress.Street = request.BillingAddress.Street
-	//createOrderRequest.BillingAddress.Postcode = request.BillingAddress.Postcode
-	//createOrderRequest.BillingAddress.City = request.BillingAddress.City
-	//createOrderRequest.BillingAddress.Telephone = request.BillingAddress.Telephone
-	//createOrderRequest.BillingAddress.FirstName = request.BillingAddress.FirstName
-	//createOrderRequest.BillingAddress.LastName = request.BillingAddress.LastName
-
 	client := connector.NewClient()
 
 	data, err := client.Order.CreateOrder(tokenCustomer,createOrderRequest)

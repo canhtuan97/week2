@@ -49,7 +49,13 @@ func (s *server) AddItemProductConfigurable(ctx context.Context, request *cartPb
 }
 
 func (s *server) GetQuoteIdCustomer(ctx context.Context, request *customerPb.GetQuoteIdCustomerRequest) (*customerPb.GetQuoteIdCustomerResponse, error) {
-	panic("implement me")
+	data, err := customer.GetQuoteIdCustomer(ctx,request)
+	if err != nil {
+		return nil, err
+	}
+
+
+	return data, nil
 }
 
 func (s *server) GetAccessTokenCustomer(ctx context.Context, request *customerPb.GetAccessTokenCustomerRequest) (*customerPb.GetAccessTokenCustomerResponse, error) {

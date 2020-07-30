@@ -2,6 +2,7 @@ package connector
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -14,6 +15,7 @@ const (
 	urlAddItemToCart    = "/rest/default/V1/carts/mine/items"
 	urlEstimateShipping = "/rest/V1/carts/19393/estimate-shipping-methods"
 	urlCreateOrder      = "/rest/V1/carts/mine/payment-information"
+	UrlQuote            = "/rest/V1/carts/mine"
 	quoteId             = 19223
 	dasd                = 19332
 )
@@ -73,11 +75,12 @@ func (c Client) CreateRequestPostV2(url string, body []byte) ([]byte, error) {
 
 }
 
-func (c Client) CreateRequest(url string, tokenCustomer []string, body []byte) (*http.Response, error) {
+func (c Client) CreateRequest(url string, tokenCustomer []string, body []byte) ([]byte , error) {
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println(string(tokenCustomer[0]))
 	req.Header.Set("Authorization", string(tokenCustomer[0]))
 	req.Header.Set("Content-Type", "application/json")
 	resp, err := c.Client.Do(req)
@@ -85,10 +88,11 @@ func (c Client) CreateRequest(url string, tokenCustomer []string, body []byte) (
 	if err != nil {
 		return nil, err
 	}
-	return resp, nil
+	data, err := ioutil.ReadAll(resp.Body)
+
+	return data, nil
 
 }
-
 
 func CheckResponse(res *http.Response) ([]byte, error) {
 	if res.Status == "400" {

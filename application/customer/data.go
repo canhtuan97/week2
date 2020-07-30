@@ -1,11 +1,14 @@
 package customer
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/canhtuan97/week2/connector"
 	"github.com/canhtuan97/week2/protobuff/customerpb"
+	"google.golang.org/grpc/metadata"
 	"log"
+	"strconv"
 )
 
 func CreateCustomer(request *customerPb.CreateCustomerRequest) (*connector.Customer, error) {
@@ -48,15 +51,14 @@ func CreateCustomer(request *customerPb.CreateCustomerRequest) (*connector.Custo
 	return data, nil
 }
 
-func GetAccessTokenCustomer(request *customerPb.GetAccessTokenCustomerRequest) (*customerPb.GetAccessTokenCustomerResponse , error) {
+func GetAccessTokenCustomer(request *customerPb.GetAccessTokenCustomerRequest) (*customerPb.GetAccessTokenCustomerResponse, error) {
 	client := connector.NewClient()
 	url := client.UrlMagento + connector.UrlGetAccessToken
 	fmt.Println(url)
 	strData, _ := json.Marshal(request)
 	fmt.Println("data; ", string(strData))
 
-
-	resp ,err := client.CreateRequestPostV2(url,strData)
+	resp, err := client.CreateRequestPostV2(url, strData)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -66,7 +68,7 @@ func GetAccessTokenCustomer(request *customerPb.GetAccessTokenCustomerRequest) (
 	}
 	getTokenCustomerResponse := GetTokenCustomerResponse{}
 	json.Unmarshal(resp, &getTokenCustomerResponse)
-	fmt.Println("day la data",string(resp))
+	fmt.Println("day la data", string(resp))
 
 	respData := &customerPb.GetAccessTokenCustomerResponse{
 		AccessToken: getTokenCustomerResponse.Token,
@@ -74,7 +76,30 @@ func GetAccessTokenCustomer(request *customerPb.GetAccessTokenCustomerRequest) (
 	return respData, nil
 }
 
-func GetQuoteIdCustomer(request *customerPb.GetQuoteIdCustomerRequest) (*customerPb.GetQuoteIdCustomerResponse,error)  {
-	panic("implement me")
-}
+func GetQuoteIdCustomer(ctx context.Context, request *customerPb.GetQuoteIdCustomerRequest) (*customerPb.GetQuoteIdCustomerResponse, error) {
+	fmt.Println("GetQuoteIdCustomer data running ...")
+	headers, _ := metadata.FromIncomingContext(ctx)
+	tokenCustomer := headers["authorization"]
 
+	client := connector.NewClient()
+	url := client.UrlMagento + connector.UrlQuote
+	fmt.Println(url)
+
+	resp, err := client.CreateRequest(url, tokenCustomer, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	byteToInt, _ := strconv.Atoi(string(resp))
+	fmt.Println(byteToInt)
+
+	quoteIdResponse := QuoteIdResponse{}
+	json.Unmarshal(resp, &quoteIdResponse)
+
+
+	respClient := &customerPb.GetQuoteIdCustomerResponse{
+		QuoteId: fmt.Println(byteToInt),
+	}
+	return respClient, nil
+
+}
