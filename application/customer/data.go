@@ -6,7 +6,6 @@ import (
 	"github.com/canhtuan97/week2/connector"
 	"github.com/canhtuan97/week2/protobuff/customerpb"
 	"log"
-	"net/http"
 )
 
 func CreateCustomer(request *customerPb.CreateCustomerRequest) (*connector.Customer, error) {
@@ -49,34 +48,30 @@ func CreateCustomer(request *customerPb.CreateCustomerRequest) (*connector.Custo
 	return data, nil
 }
 
-func GetAccessTokenCustomer(request *customerPb.GetAccessTokenCustomerRequest) (*http.Response , error) {
+func GetAccessTokenCustomer(request *customerPb.GetAccessTokenCustomerRequest) (*customerPb.GetAccessTokenCustomerResponse , error) {
 	client := connector.NewClient()
 	url := client.UrlMagento + connector.UrlGetAccessToken
 	fmt.Println(url)
-	login := Login{
-		username: request.Username,
-		password:  request.Password,
-	}
+	strData, _ := json.Marshal(request)
+	fmt.Println("data; ", string(strData))
 
 
-
-	dataConvert, err1 := json.Marshal(login)
-	if err1 != nil {
-		log.Fatal(err1)
-	}
-	fmt.Println(string(login.username))
-	fmt.Println(string(login.password))
-	fmt.Println(string(request.Password))
-	fmt.Println(dataConvert)
-	fmt.Println(string(dataConvert))
-	//--------- đang k hiểu sao cái dataConvert null
-
-
-	resp ,err := client.CreateRequestPost(url,dataConvert)
+	resp ,err := client.CreateRequestPostV2(url,strData)
 	if err != nil {
 		log.Fatal(err)
 	}
-	return resp, nil
+
+	type GetTokenCustomerResponse struct {
+		Token string `json:"token"`
+	}
+	getTokenCustomerResponse := GetTokenCustomerResponse{}
+	json.Unmarshal(resp, &getTokenCustomerResponse)
+	fmt.Println("day la data",string(resp))
+
+	respData := &customerPb.GetAccessTokenCustomerResponse{
+		AccessToken: getTokenCustomerResponse.Token,
+	}
+	return respData, nil
 }
 
 func GetQuoteIdCustomer(request *customerPb.GetQuoteIdCustomerRequest) (*customerPb.GetQuoteIdCustomerResponse,error)  {

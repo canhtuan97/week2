@@ -54,12 +54,31 @@ func (c Client) CreateRequestPost(url string, body []byte) (*http.Response, erro
 
 }
 
+func (c Client) CreateRequestPostV2(url string, body []byte) ([]byte, error) {
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(body))
+	if err != nil {
+		return nil, err
+	}
+	bearer := "bearer " + apiKey
+
+	req.Header.Set("Authorization", bearer)
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := c.Client.Do(req)
+
+	data, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+
+}
+
 func (c Client) CreateRequest(url string, tokenCustomer []string, body []byte) (*http.Response, error) {
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authorization", tokenCustomer[0])
+	req.Header.Set("Authorization", string(tokenCustomer[0]))
 	req.Header.Set("Content-Type", "application/json")
 	resp, err := c.Client.Do(req)
 

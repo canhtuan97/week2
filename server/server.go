@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net"
 
@@ -15,7 +14,6 @@ import (
 	"github.com/canhtuan97/week2/protobuff/customerpb"
 	"github.com/canhtuan97/week2/protobuff/orderpb"
 	"google.golang.org/grpc"
-
 )
 
 type server struct{}
@@ -59,14 +57,9 @@ func (s *server) GetAccessTokenCustomer(ctx context.Context, request *customerPb
 	if err != nil {
 		return nil, err
 	}
-	data, err := ioutil.ReadAll(accessToken.Body)
-	if err != nil {
-		return nil, err
-	}
-	resp := &customerPb.GetAccessTokenCustomerResponse{
-		AccessToken: string(data),
-	}
-	return resp, nil
+
+
+	return accessToken, nil
 }
 
 func (s *server) AddItemProductSimple(ctx context.Context, request *cartPb.AddItemProductSimpleRequest) (*cartPb.AddItemProductSimpleResponse, error) {

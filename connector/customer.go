@@ -3,7 +3,6 @@ package connector
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 )
 
@@ -60,6 +59,7 @@ type Customers struct {
 	client *Client
 }
 
+
 func (c Customers) CreateCustomer(createCustomerRequest CreateCustomerRequest) (*Customer, error) {
 
 	url := c.client.UrlMagento + urlCreateCustomer
@@ -68,11 +68,11 @@ func (c Customers) CreateCustomer(createCustomerRequest CreateCustomerRequest) (
 		return nil, err
 	}
 
-	resp, err := c.client.CreateRequestPost(url, dataConvert)
+	resp, err := c.client.CreateRequestPostV2(url, dataConvert)
 	if err != nil {
 		log.Fatal(err)
 	}
-	data, err := ioutil.ReadAll(resp.Body)
+
 	customer := Customer{}
 	//-------------Đoạn này đang viết check lỗi
 	//data, err := CheckResponse(resp)
@@ -85,8 +85,8 @@ func (c Customers) CreateCustomer(createCustomerRequest CreateCustomerRequest) (
 	//	log.Fatal(err)
 	//}
 	//--------------------------------------
-	json.Unmarshal(data, &customer)
-	fmt.Println(string(data))
+	json.Unmarshal(resp, &customer)
+	fmt.Println(string(resp))
 	return &customer, nil
 
 }

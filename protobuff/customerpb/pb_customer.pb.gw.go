@@ -307,7 +307,7 @@ var (
 
 	pattern_Customer_GetAccessTokenCustomer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"V1", "integration", "customer", "token"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Customer_GetQuoteIdCustomer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"rest", "default", "V1", "carts", "mine"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Customer_GetQuoteIdCustomer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"rest", "V1", "carts", "mine"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

@@ -85,7 +85,7 @@ service Customer {
   }
   rpc GetQuoteIdCustomer(GetQuoteIdCustomerRequest) returns (GetQuoteIdCustomerResponse) {
     option (google.api.http) = {
-      post: "/rest/default/V1/carts/mine"
+      post: "/rest/V1/carts/mine"
       body: "*"
     };
   }

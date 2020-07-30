@@ -58,7 +58,7 @@ func CreateOrder(ctx  context.Context ,request *orderPb.CreateOrderRequest) (*or
 		log.Fatalf(" loi cua minh %v",err)
 	}
 	resp := orderPb.CreateOrderResponse{
-		Order: int32(data.OrderID),
+		OrderId: int32(data.OrderID),
 	}
 	return &resp,nil
 
