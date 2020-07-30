@@ -57,8 +57,7 @@ func GetAccessTokenCustomer(request *customerPb.GetAccessTokenCustomerRequest) (
 		username: request.Username,
 		password:  request.Password,
 	}
-	//login.username = request.UserName
-	//login.username = request.Password
+
 
 
 	dataConvert, err1 := json.Marshal(login)

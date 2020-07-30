@@ -13,7 +13,7 @@ const (
 	UrlGetAccessToken   = "/rest/V1/integration/customer/token"
 	urlAddItemToCart    = "/rest/default/V1/carts/mine/items"
 	urlEstimateShipping = "/rest/V1/carts/19393/estimate-shipping-methods"
-	url
+	urlCreateOrder      = "/rest/V1/carts/mine/payment-information"
 	quoteId             = 19223
 	dasd                = 19332
 )
@@ -24,17 +24,17 @@ type Client struct {
 	UrlMagento string
 	Customers  CustomersService
 	Carts      CartServices
+	Order      OrderService
 }
 
 func NewClient() *Client {
 	httpClient := http.DefaultClient
 	c := &Client{Client: httpClient}
 	c.ApiKey = apiKey
-	c.ApiKey = apiKey
 	c.UrlMagento = urlMagento
 	c.Customers = &Customers{client: c}
 	c.Carts = &Cart{client: c}
-
+	c.Order = &Order{client: c}
 	return c
 }
 func (c Client) CreateRequestPost(url string, body []byte) (*http.Response, error) {
@@ -53,6 +53,23 @@ func (c Client) CreateRequestPost(url string, body []byte) (*http.Response, erro
 	return resp, nil
 
 }
+
+func (c Client) CreateRequest(url string, tokenCustomer []string, body []byte) (*http.Response, error) {
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(body))
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Authorization", tokenCustomer[0])
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := c.Client.Do(req)
+
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+
+}
+
 
 func CheckResponse(res *http.Response) ([]byte, error) {
 	if res.Status == "400" {

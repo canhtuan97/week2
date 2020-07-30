@@ -8,6 +8,8 @@ import (
 	"net"
 
 	"github.com/canhtuan97/week2/application/cart"
+	"github.com/canhtuan97/week2/application/order"
+
 	"github.com/canhtuan97/week2/application/customer"
 	"github.com/canhtuan97/week2/protobuff/cartpb"
 	"github.com/canhtuan97/week2/protobuff/customerpb"
@@ -17,6 +19,19 @@ import (
 )
 
 type server struct{}
+
+func (s *server) CreateOrder(ctx context.Context, request *orderPb.CreateOrderRequest) (*orderPb.CreateOrderResponse, error) {
+	fmt.Println("CreateOrder  running ...")
+
+
+	data , err := order.CreateOrder(ctx,request)
+	if err != nil {
+		return nil, err
+	}
+
+	return data, nil
+
+}
 
 func (s *server) EstimateShipping(ctx context.Context, request *cartPb.EstimateShippingRequest) (*cartPb.EstimateShippingResponse, error) {
 	fmt.Println("EstimateShipping running ...")
@@ -110,7 +125,7 @@ func main() {
 
 	customerPb.RegisterCustomerServer(s, &server{})
 	cartPb.RegisterAddItemProductServer(s, &server{})
-	orderPb.Reg
+	orderPb.RegisterOrderServer(s,&server{})
 	fmt.Println("Server running ...")
 
 	err = s.Serve(lis)

@@ -5,6 +5,7 @@ import (
 	"flag"
 	"github.com/canhtuan97/week2/protobuff/customerpb"
 	"github.com/canhtuan97/week2/protobuff/cartpb"
+	orderPb "github.com/canhtuan97/week2/protobuff/orderpb"
 	"log"
 	"net/http"
 
@@ -33,6 +34,10 @@ func run() error {
 	}
 	err1 := cartPb.RegisterAddItemProductHandlerFromEndpoint(ctx, mux,  *grpcServerEndpoint, opts)
 	if err1 != nil {
+		return err
+	}
+	err2 := orderPb.RegisterOrderHandlerFromEndpoint(ctx, mux,  *grpcServerEndpoint, opts)
+	if err2 != nil {
 		return err
 	}
 	// Start HTTP server (and proto_demo calls to gRPC server endpoint)
