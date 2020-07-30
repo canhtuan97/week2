@@ -11,6 +11,7 @@ import (
 	"github.com/canhtuan97/week2/application/customer"
 	"github.com/canhtuan97/week2/protobuff/cartpb"
 	"github.com/canhtuan97/week2/protobuff/customerpb"
+	"github.com/canhtuan97/week2/protobuff/orderpb"
 	"google.golang.org/grpc"
 
 )
@@ -109,6 +110,7 @@ func main() {
 
 	customerPb.RegisterCustomerServer(s, &server{})
 	cartPb.RegisterAddItemProductServer(s, &server{})
+	orderPb.Reg
 	fmt.Println("Server running ...")
 
 	err = s.Serve(lis)

@@ -30,7 +30,7 @@ message CreateOrderResponse {
   int32 order = 1;
 }
 
-service Customer {
+service Order {
   rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {
     option (google.api.http) = {
       post: "/rest/V1/carts/mine/payment-information"

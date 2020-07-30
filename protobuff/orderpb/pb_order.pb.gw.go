@@ -31,7 +31,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = descriptor.ForMessage
 
-func request_Customer_CreateOrder_0(ctx context.Context, marshaler runtime.Marshaler, client CustomerClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Order_CreateOrder_0(ctx context.Context, marshaler runtime.Marshaler, client OrderClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateOrderRequest
 	var metadata runtime.ServerMetadata
 
@@ -48,7 +48,7 @@ func request_Customer_CreateOrder_0(ctx context.Context, marshaler runtime.Marsh
 
 }
 
-func local_request_Customer_CreateOrder_0(ctx context.Context, marshaler runtime.Marshaler, server CustomerServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Order_CreateOrder_0(ctx context.Context, marshaler runtime.Marshaler, server OrderServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateOrderRequest
 	var metadata runtime.ServerMetadata
 
@@ -65,12 +65,12 @@ func local_request_Customer_CreateOrder_0(ctx context.Context, marshaler runtime
 
 }
 
-// RegisterCustomerHandlerServer registers the http handlers for service Customer to "mux".
-// UnaryRPC     :call CustomerServer directly.
+// RegisterOrderHandlerServer registers the http handlers for service Order to "mux".
+// UnaryRPC     :call OrderServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-func RegisterCustomerHandlerServer(ctx context.Context, mux *runtime.ServeMux, server CustomerServer) error {
+func RegisterOrderHandlerServer(ctx context.Context, mux *runtime.ServeMux, server OrderServer) error {
 
-	mux.Handle("POST", pattern_Customer_CreateOrder_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Order_CreateOrder_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -79,23 +79,23 @@ func RegisterCustomerHandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Customer_CreateOrder_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Order_CreateOrder_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Customer_CreateOrder_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Order_CreateOrder_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterCustomerHandlerFromEndpoint is same as RegisterCustomerHandler but
+// RegisterOrderHandlerFromEndpoint is same as RegisterOrderHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterCustomerHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterOrderHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -115,23 +115,23 @@ func RegisterCustomerHandlerFromEndpoint(ctx context.Context, mux *runtime.Serve
 		}()
 	}()
 
-	return RegisterCustomerHandler(ctx, mux, conn)
+	return RegisterOrderHandler(ctx, mux, conn)
 }
 
-// RegisterCustomerHandler registers the http handlers for service Customer to "mux".
+// RegisterOrderHandler registers the http handlers for service Order to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterCustomerHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterCustomerHandlerClient(ctx, mux, NewCustomerClient(conn))
+func RegisterOrderHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterOrderHandlerClient(ctx, mux, NewOrderClient(conn))
 }
 
-// RegisterCustomerHandlerClient registers the http handlers for service Customer
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "CustomerClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "CustomerClient"
+// RegisterOrderHandlerClient registers the http handlers for service Order
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "OrderClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "OrderClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "CustomerClient" to call the correct interceptors.
-func RegisterCustomerHandlerClient(ctx context.Context, mux *runtime.ServeMux, client CustomerClient) error {
+// "OrderClient" to call the correct interceptors.
+func RegisterOrderHandlerClient(ctx context.Context, mux *runtime.ServeMux, client OrderClient) error {
 
-	mux.Handle("POST", pattern_Customer_CreateOrder_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Order_CreateOrder_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -140,14 +140,14 @@ func RegisterCustomerHandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Customer_CreateOrder_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Order_CreateOrder_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Customer_CreateOrder_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Order_CreateOrder_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -155,9 +155,9 @@ func RegisterCustomerHandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 }
 
 var (
-	pattern_Customer_CreateOrder_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"rest", "V1", "carts", "mine", "payment-information"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Order_CreateOrder_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"rest", "V1", "carts", "mine", "payment-information"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
-	forward_Customer_CreateOrder_0 = runtime.ForwardResponseMessage
+	forward_Order_CreateOrder_0 = runtime.ForwardResponseMessage
 )
