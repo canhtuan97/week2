@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package proto;
+import "google/api/annotations.proto";
+
+option go_package = "orderPb";
+
+message PaymentMethod {
+  string method = 1;
+}
+
+message BillingAddress {
+  string email = 1;
+  string region = 2;
+  int32 regionId = 3;
+  string regionCode = 4;
+  string  countryId = 5;
+  repeated  string street = 6;
+  string postcode = 7;
+  string city = 8;
+  string telephone = 9 ;
+  string firstName = 10;
+  string lastName = 11;
+}
+message CreateOrderRequest{
+  PaymentMethod paymentMethod = 1 ;
+  BillingAddress BillingAddress = 2;
+}
+message CreateOrderResponse {
+  int32 order = 1;
+}
+
+service Customer {
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {
+    option (google.api.http) = {
+      post: "/rest/V1/carts/mine/payment-information"
+      body: "*"
+    };
+  }
+
+}
+
+
+
