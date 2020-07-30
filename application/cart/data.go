@@ -85,7 +85,7 @@ func EstimateShipping(request *cartPb.EstimateShippingRequest) (*cartPb.Estimate
 			CustomerId:    int(request.CustomerId),
 			Email:         request.Email,
 			Telephone:     request.Telephone,
-			SameAsBilling: 0,
+			SameAsBilling: int(request.SameAsBilling),
 		},
 	}
 
