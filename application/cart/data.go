@@ -1,8 +1,9 @@
 package cart
 
 import (
+	"fmt"
 	"github.com/canhtuan97/week2/connector"
-	"github.com/canhtuan97/week2/proto/cart"
+	"github.com/canhtuan97/week2/protobuff/cartpb"
 	"log"
 )
 
@@ -66,6 +67,7 @@ func AddItemProductConfigurable(request *cartPb.AddItemProductConfigurableReques
 
 
 func EstimateShipping(request *cartPb.EstimateShippingRequest) (*cartPb.EstimateShippingResponse,error)  {
+	fmt.Println("EstimateShipping running..")
 	estimateShippingRequest := connector.EstimateShippingRequest{
 		Address: connector.Address{
 			Region:        request.Address.Region,

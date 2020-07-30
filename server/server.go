@@ -9,8 +9,8 @@ import (
 
 	"github.com/canhtuan97/week2/application/cart"
 	"github.com/canhtuan97/week2/application/customer"
-	"github.com/canhtuan97/week2/proto/cart"
-	"github.com/canhtuan97/week2/proto/customer"
+	"github.com/canhtuan97/week2/protobuff/cartpb"
+	"github.com/canhtuan97/week2/protobuff/customerpb"
 	"google.golang.org/grpc"
 
 )
@@ -18,6 +18,7 @@ import (
 type server struct{}
 
 func (s *server) EstimateShipping(ctx context.Context, request *cartPb.EstimateShippingRequest) (*cartPb.EstimateShippingResponse, error) {
+	fmt.Println("EstimateShipping running ...")
 	data , err := cart.EstimateShipping(request)
 	if err != nil {
 		return nil, err
@@ -53,6 +54,7 @@ func (s *server) GetAccessTokenCustomer(ctx context.Context, request *customerPb
 }
 
 func (s *server) AddItemProductSimple(ctx context.Context, request *cartPb.AddItemProductSimpleRequest) (*cartPb.AddItemProductSimpleResponse, error) {
+	fmt.Println("AddItemProductSimple running ...")
 	data, err := cart.AddItemProductSimple(request)
 	if err != nil {
 		return nil, err

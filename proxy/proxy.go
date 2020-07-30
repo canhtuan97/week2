@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"flag"
-	"github.com/canhtuan97/week2/proto/cart"
-	"github.com/canhtuan97/week2/proto/customer"
+	"github.com/canhtuan97/week2/protobuff/customerpb"
+	"github.com/canhtuan97/week2/protobuff/cartpb"
 	"log"
 	"net/http"
 

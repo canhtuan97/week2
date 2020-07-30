@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/canhtuan97/week2/connector"
-	"github.com/canhtuan97/week2/proto/customer"
+	"github.com/canhtuan97/week2/protobuff/customerpb"
 	"log"
 	"net/http"
 )
