@@ -2,6 +2,7 @@ package order
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/canhtuan97/week2/connector"
 	orderPb "github.com/canhtuan97/week2/protobuff/orderpb"
@@ -14,7 +15,8 @@ func CreateOrder(ctx  context.Context ,request *orderPb.CreateOrderRequest) (*or
 	headers, _ := metadata.FromIncomingContext(ctx)
 	tokenCustomer := headers["authorization"]
 
-
+	strData, _ := json.Marshal(request)
+	fmt.Println("data; ", string(strData))
 	createOrderRequest := connector.CreateOrderRequest{
 		PaymentMethod: connector.PaymentMethod{Method: request.PaymentMethod.Method},
 		BillingAddress: connector.BillingAddress{
@@ -31,6 +33,10 @@ func CreateOrder(ctx  context.Context ,request *orderPb.CreateOrderRequest) (*or
 			LastName:   request.BillingAddress.LastName,
 		},
 	}
+
+
+
+
 	//var createOrderRequest connector.CreateOrderRequest
 	//createOrderRequest.PaymentMethod.Method = request.PaymentMethod.Method
 	//createOrderRequest.BillingAddress.Email = request.BillingAddress.Email

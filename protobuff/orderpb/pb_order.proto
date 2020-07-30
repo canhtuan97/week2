@@ -24,10 +24,10 @@ message BillingAddress {
 }
 message CreateOrderRequest{
   PaymentMethod paymentMethod = 1 ;
-  BillingAddress BillingAddress = 2;
+  BillingAddress billingAddress = 2;
 }
 message CreateOrderResponse {
-  int32 order = 1;
+  int32 orderId = 1;
 }
 
 service Order {
