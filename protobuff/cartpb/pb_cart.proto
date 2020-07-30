@@ -95,16 +95,16 @@ message EstimateShippingRequest{
 }
 
 message Data {
-  string  carrier_code = 1;
-  string  method_code = 2;
-  string  carrier_title = 3;
-  string  method_title = 4;
+  string  carrierCode = 1;
+  string  methodCode = 2;
+  string  carrierTitle = 3;
+  string  methodTitle = 4;
   int32   amount = 5;
-  int32   base_amount = 6;
+  int32   baseAmount = 6;
   bool    available = 7;
-  string  error_message = 8;
-  int32   price_excl_tax = 9;
-  int32   price_incl_tax = 10;
+  string  errorMessage = 8;
+  int32   priceExclTax = 9;
+  int32   priceInclTax = 10;
 }
 message EstimateShippingResponse {
   repeated Data data = 1;
