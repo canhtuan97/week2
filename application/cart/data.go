@@ -68,9 +68,7 @@ func AddItemProductConfigurable(request *cartPb.AddItemProductConfigurableReques
 
 func EstimateShipping(request *cartPb.EstimateShippingRequest) (*cartPb.EstimateShippingResponse,error)  {
 
-
 	fmt.Println("EstimateShipping data running..")
-
 	estimateShippingRequest := connector.EstimateShippingRequest{
 		Address: connector.Address{
 			Region:        request.Region,
@@ -89,12 +87,13 @@ func EstimateShipping(request *cartPb.EstimateShippingRequest) (*cartPb.Estimate
 		},
 	}
 
+	quoteId := request.QuoteId
 
 
 	client := connector.NewClient()
 
 
-	data , err := client.Carts.EstimateShipping(estimateShippingRequest)
+	data , err := client.Carts.EstimateShipping(quoteId,estimateShippingRequest)
 	if err != nil {
 		log.Fatalf(" loi cua minh%v", err)
 	}

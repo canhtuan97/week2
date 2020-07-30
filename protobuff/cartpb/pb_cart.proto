@@ -78,6 +78,7 @@ message  Address {
 
 }
 message EstimateShippingRequest{
+
   string region = 1;
   int32 regionId = 2;
   string regionCode = 3;
@@ -91,6 +92,7 @@ message EstimateShippingRequest{
   string email = 11 ;
   string telephone = 12;
   int32  sameAsBilling = 13;
+  string quoteId = 14;
 
 }
 

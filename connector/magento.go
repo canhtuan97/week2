@@ -8,17 +8,16 @@ import (
 )
 
 const (
-	apiKey              = "71qhxcusonwayh5jeynhupjci7v2ecob"
-	urlMagento          = "https://magento23demo.connectpos.com"
-	urlCreateCustomer   = "/rest/V1/customers"
-	UrlGetAccessToken   = "/rest/V1/integration/customer/token"
-	urlAddItemToCart    = "/rest/default/V1/carts/mine/items"
-	urlEstimateShipping = "/rest/V1/carts/19393/estimate-shipping-methods"
-	urlCreateOrder      = "/rest/V1/carts/mine/payment-information"
-	UrlQuote            = "/rest/V1/carts/mine"
-	quoteId             = 19223
-	dasd                = 19332
+	apiKey            = "71qhxcusonwayh5jeynhupjci7v2ecob"
+	urlMagento        = "https://magento23demo.connectpos.com"
+	urlCreateCustomer = "/rest/V1/customers"
+	UrlGetAccessToken = "/rest/V1/integration/customer/token"
+	urlAddItemToCart  = "/rest/default/V1/carts/mine/items"
+	UrlQuote          = "/rest/V1/carts/mine"
+	urlCreateOrder    = "/rest/V1/carts/mine/payment-information"
 )
+
+var urlEstimateShipping = [2]string{"/rest/V1/carts/", "/estimate-shipping-methods"}
 
 type Client struct {
 	Client     *http.Client
@@ -75,7 +74,7 @@ func (c Client) CreateRequestPostV2(url string, body []byte) ([]byte, error) {
 
 }
 
-func (c Client) CreateRequest(url string, tokenCustomer []string, body []byte) ([]byte , error) {
+func (c Client) CreateRequest(url string, tokenCustomer []string, body []byte) ([]byte, error) {
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err

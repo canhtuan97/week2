@@ -7,7 +7,7 @@ import (
 )
 
 type CreateOrderRequest struct {
-	PaymentMethod  PaymentMethod  `json:"payment_method"`
+	PaymentMethod  PaymentMethod  `json:"paymentMethod"`
 	BillingAddress BillingAddress `json:"billing_address"`
 }
 
@@ -30,43 +30,31 @@ type BillingAddress struct {
 }
 
 type CreateOrderResponse struct {
-	OrderID int `json:"order_id"`
+	OrderID string `json:"order_id"`
 }
 type OrderService interface {
-	CreateOrder(tokenCustomer []string,createOrderRequest CreateOrderRequest) (*CreateOrderResponse,error)
+	CreateOrder(quoteId string,tokenCustomer []string,createOrderRequest CreateOrderRequest) (string,error)
 }
 
 type Order struct {
 	client *Client
 }
 
-func (c Order) CreateOrder(tokenCustomer []string,createOrderRequest CreateOrderRequest) (*CreateOrderResponse,error){
+func (c Order) CreateOrder(quoteId string,tokenCustomer []string,createOrderRequest CreateOrderRequest) (string ,error){
 
 	url := c.client.UrlMagento + urlCreateOrder
 	fmt.Println(url)
 	dataConvert, err := json.Marshal(createOrderRequest)
-	if err != nil {
-		return nil, err
-	}
 
+
+	fmt.Println("day la data push",string(dataConvert))
 	resp, err := c.client.CreateRequest(url,tokenCustomer, dataConvert)
 	if err != nil {
 		log.Fatal(err)
 	}
+	orderID := string(resp)
 
-	createOrderResponse := CreateOrderResponse{}
-	//-------------Đoạn này đang viết check lỗi
-	//data, err := CheckResponse(resp)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//
-	//
-	//if err == nil {
-	//	log.Fatal(err)
-	//}
-	//--------------------------------------
-	json.Unmarshal(resp, &createOrderResponse)
+	fmt.Println("orderID",orderID)
 	fmt.Println(string(resp))
-	return &createOrderResponse, nil
+	return orderID, nil
 }

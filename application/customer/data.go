@@ -91,14 +91,10 @@ func GetQuoteIdCustomer(ctx context.Context, request *customerPb.GetQuoteIdCusto
 	}
 
 	byteToInt, _ := strconv.Atoi(string(resp))
-	fmt.Println(byteToInt)
-
-	quoteIdResponse := QuoteIdResponse{}
-	json.Unmarshal(resp, &quoteIdResponse)
-
+	quoteId := strconv.Itoa(byteToInt) // s == "97"
 
 	respClient := &customerPb.GetQuoteIdCustomerResponse{
-		QuoteId: fmt.Println(byteToInt),
+		QuoteId: quoteId,
 	}
 	return respClient, nil
 

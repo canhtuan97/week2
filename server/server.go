@@ -21,8 +21,7 @@ type server struct{}
 func (s *server) CreateOrder(ctx context.Context, request *orderPb.CreateOrderRequest) (*orderPb.CreateOrderResponse, error) {
 	fmt.Println("CreateOrder  running ...")
 
-
-	data , err := order.CreateOrder(ctx,request)
+	data, err := order.CreateOrder(ctx, request)
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +32,8 @@ func (s *server) CreateOrder(ctx context.Context, request *orderPb.CreateOrderRe
 
 func (s *server) EstimateShipping(ctx context.Context, request *cartPb.EstimateShippingRequest) (*cartPb.EstimateShippingResponse, error) {
 	fmt.Println("EstimateShipping running ...")
-	data , err := cart.EstimateShipping(request)
+	data, err := cart.EstimateShipping(request)
+	fmt.Println(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +41,7 @@ func (s *server) EstimateShipping(ctx context.Context, request *cartPb.EstimateS
 }
 
 func (s *server) AddItemProductConfigurable(ctx context.Context, request *cartPb.AddItemProductConfigurableRequest) (*cartPb.AddItemProductConfigurableResponse, error) {
-	data ,err := cart.AddItemProductConfigurable(request)
+	data, err := cart.AddItemProductConfigurable(request)
 	if err != nil {
 		return nil, err
 	}
@@ -49,11 +49,10 @@ func (s *server) AddItemProductConfigurable(ctx context.Context, request *cartPb
 }
 
 func (s *server) GetQuoteIdCustomer(ctx context.Context, request *customerPb.GetQuoteIdCustomerRequest) (*customerPb.GetQuoteIdCustomerResponse, error) {
-	data, err := customer.GetQuoteIdCustomer(ctx,request)
+	data, err := customer.GetQuoteIdCustomer(ctx, request)
 	if err != nil {
 		return nil, err
 	}
-
 
 	return data, nil
 }
@@ -63,7 +62,6 @@ func (s *server) GetAccessTokenCustomer(ctx context.Context, request *customerPb
 	if err != nil {
 		return nil, err
 	}
-
 
 	return accessToken, nil
 }
@@ -124,7 +122,7 @@ func main() {
 
 	customerPb.RegisterCustomerServer(s, &server{})
 	cartPb.RegisterAddItemProductServer(s, &server{})
-	orderPb.RegisterOrderServer(s,&server{})
+	orderPb.RegisterOrderServer(s, &server{})
 	fmt.Println("Server running ...")
 
 	err = s.Serve(lis)

@@ -36,13 +36,15 @@ func CreateOrder(ctx  context.Context ,request *orderPb.CreateOrderRequest) (*or
 
 
 	client := connector.NewClient()
-
-	data, err := client.Order.CreateOrder(tokenCustomer,createOrderRequest)
+	quoteId := request.QuoteId
+	data, err := client.Order.CreateOrder(quoteId,tokenCustomer,createOrderRequest)
 	if err != nil {
 		log.Fatalf(" loi cua minh %v",err)
 	}
+	fmt.Println(data)
+
 	resp := orderPb.CreateOrderResponse{
-		OrderId: int32(data.OrderID),
+		OrderId: data,
 	}
 	return &resp,nil
 

@@ -91,7 +91,7 @@ type Cart struct {
 type CartServices interface {
 	AddProductSimple(addItemSimpleRequest AddItemSimpleRequest) (*CartItem, error)
 	AddProductConfigurable(addProductConfigurableRequest AddProductConfigurableRequest) (*CartItem, error)
-	EstimateShipping(estimateShippingRequest EstimateShippingRequest) ([]*DataResponse, error)
+	EstimateShipping(quoteId string,estimateShippingRequest EstimateShippingRequest) ([]*DataResponse, error)
 }
 
 func (c Cart) AddProductSimple(addItemSimpleRequest AddItemSimpleRequest) (*CartItem, error) {
@@ -132,8 +132,9 @@ func (c Cart) AddProductConfigurable(addProductConfigurableRequest AddProductCon
 	return &cartItem, nil
 }
 
-func (c Cart) EstimateShipping(estimateShippingRequest EstimateShippingRequest) ([]*DataResponse, error) {
-	url := c.client.UrlMagento + urlEstimateShipping
+func (c Cart) EstimateShipping(quoteId string,estimateShippingRequest EstimateShippingRequest) ([]*DataResponse, error) {
+	url := c.client.UrlMagento + urlEstimateShipping[0] + quoteId + urlEstimateShipping[1]
+
 	dataConvert, err := json.Marshal(estimateShippingRequest)
 	fmt.Println(string(url))
 	fmt.Println("day la test ", string(dataConvert))
