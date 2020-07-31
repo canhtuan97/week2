@@ -33,28 +33,27 @@ type CreateOrderResponse struct {
 	OrderID string `json:"order_id"`
 }
 type OrderService interface {
-	CreateOrder(quoteId string,tokenCustomer []string,createOrderRequest CreateOrderRequest) (string,error)
+	CreateOrder(quoteId string, tokenCustomer []string, createOrderRequest CreateOrderRequest) (string, error)
 }
 
 type Order struct {
 	client *Client
 }
 
-func (c Order) CreateOrder(quoteId string,tokenCustomer []string,createOrderRequest CreateOrderRequest) (string ,error){
+func (c Order) CreateOrder(quoteId string, tokenCustomer []string, createOrderRequest CreateOrderRequest) (string, error) {
 
 	url := c.client.UrlMagento + urlCreateOrder
 	fmt.Println(url)
 	dataConvert, err := json.Marshal(createOrderRequest)
 
-
-	fmt.Println("day la data push",string(dataConvert))
-	resp, err := c.client.CreateRequest(url,tokenCustomer, dataConvert)
+	fmt.Println("day la data push", string(dataConvert))
+	resp, err := c.client.CreateRequest(url, tokenCustomer, dataConvert)
 	if err != nil {
 		log.Fatal(err)
 	}
 	orderID := string(resp)
 
-	fmt.Println("orderID",orderID)
+	fmt.Println("orderID", orderID)
 	fmt.Println(string(resp))
 	return orderID, nil
 }

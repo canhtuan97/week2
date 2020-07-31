@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package proto;
+import "google/api/annotations.proto";
+
+option go_package = "invoicePb";
+
+message CreateInvoiceRequest {
+  bool capture = 1;
+  bool notify = 2;
+  string orderId = 3;
+}
+
+message CreateInvoiceResponse{
+  string invoiceId = 1;
+}
+
+
+service Invoice {
+  rpc CreateInvoice(CreateInvoiceRequest) returns (CreateInvoiceResponse) {
+    option (google.api.http) = {
+      post: "/rest/V1/order/orderId/invoice"
+      body: "*"
+    };
+  }
+}
+

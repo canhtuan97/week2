@@ -3,20 +3,46 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/canhtuan97/week2/application/shipment"
+	shipmentPb "github.com/canhtuan97/week2/protobuff/shipmentpb"
 	"log"
 	"net"
 
 	"github.com/canhtuan97/week2/application/cart"
+	"github.com/canhtuan97/week2/application/customer"
+	"github.com/canhtuan97/week2/application/invoice"
 	"github.com/canhtuan97/week2/application/order"
 
-	"github.com/canhtuan97/week2/application/customer"
 	"github.com/canhtuan97/week2/protobuff/cartpb"
 	"github.com/canhtuan97/week2/protobuff/customerpb"
+	"github.com/canhtuan97/week2/protobuff/invoicepb"
 	"github.com/canhtuan97/week2/protobuff/orderpb"
 	"google.golang.org/grpc"
 )
 
 type server struct{}
+
+func (s *server) CreateShipment(ctx context.Context, request *shipmentPb.CreateShipmentRequest) (*shipmentPb.CreateShipmentResponse, error) {
+	fmt.Println("CreateShipment  running ...")
+
+	data, err := shipment.CreateShipment(ctx, request)
+	if err != nil {
+		return nil, err
+	}
+
+	return data, nil
+}
+
+func (s *server) CreateInvoice(ctx context.Context, request *invoicePb.CreateInvoiceRequest) (*invoicePb.CreateInvoiceResponse, error) {
+	fmt.Println("CreateInvoice  running ...")
+
+	data, err := invoice.CreateOrder(ctx, request)
+	if err != nil {
+		return nil, err
+	}
+
+	return data, nil
+}
 
 func (s *server) CreateOrder(ctx context.Context, request *orderPb.CreateOrderRequest) (*orderPb.CreateOrderResponse, error) {
 	fmt.Println("CreateOrder  running ...")
@@ -123,6 +149,8 @@ func main() {
 	customerPb.RegisterCustomerServer(s, &server{})
 	cartPb.RegisterAddItemProductServer(s, &server{})
 	orderPb.RegisterOrderServer(s, &server{})
+	invoicePb.RegisterInvoiceServer(s, &server{})
+	shipmentPb.RegisterShipmentServer(s, &server{})
 	fmt.Println("Server running ...")
 
 	err = s.Serve(lis)

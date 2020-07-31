@@ -2,6 +2,7 @@ package connector
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -18,6 +19,8 @@ const (
 )
 
 var urlEstimateShipping = [2]string{"/rest/V1/carts/", "/estimate-shipping-methods"}
+var urlCreateInvoice = [2]string{"/rest/V1/order/", "/invoice"}
+var urlCreateShipment = [2]string{"/rest/V1/order/", "/ship"}
 
 type Client struct {
 	Client     *http.Client
@@ -26,6 +29,8 @@ type Client struct {
 	Customers  CustomersService
 	Carts      CartServices
 	Order      OrderService
+	Invoice    InvoiceService
+	Shipment   ShipmentService
 }
 
 func NewClient() *Client {
@@ -36,6 +41,8 @@ func NewClient() *Client {
 	c.Customers = &Customers{client: c}
 	c.Carts = &Cart{client: c}
 	c.Order = &Order{client: c}
+	c.Invoice = &Invoice{client: c}
+	c.Shipment = &Shipment{client: c}
 	return c
 }
 func (c Client) CreateRequestPost(url string, body []byte) (*http.Response, error) {
@@ -93,13 +100,56 @@ func (c Client) CreateRequest(url string, tokenCustomer []string, body []byte) (
 
 }
 
-func CheckResponse(res *http.Response) ([]byte, error) {
-	if res.Status == "400" {
-		return nil, nil
+
+func CheckResponseError(r *http.Response) error {
+	if r.StatusCode >= 200 && r.StatusCode < 300 {
+		return nil
 	}
-	data, err := ioutil.ReadAll(res.Body)
+
+	bodyBytes, err := ioutil.ReadAll(r.Body)
+
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return data, nil
+
+	responseError := &ResponseError{}
+
+	if len(bodyBytes) > 0 {
+		err := json.Unmarshal(bodyBytes, responseError)
+
+		if err != nil {
+			return ResponseDecodingError{
+				Body:    bodyBytes,
+				Message: err.Error(),
+				Status:  r.StatusCode,
+			}
+		}
+	}
+
+	return responseError
+}
+
+
+type ResponseDecodingError struct {
+	Body    []byte
+	Message string
+	Status  int
+}
+
+type ResponseError struct {
+	RequestId    string `json:"request_id,omitempty"`
+	TimeUsed     int    `json:"time_used,omitempty"`
+	ErrorMessage string `json:"error_message,omitempty"`
+}
+
+func (e ResponseDecodingError) Error() string {
+	return e.Message
+}
+
+func (e ResponseError) Error() string {
+	if e.ErrorMessage != "" {
+		return e.ErrorMessage
+	}
+
+	return "Unknown Error"
 }

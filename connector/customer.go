@@ -59,6 +59,36 @@ type Customers struct {
 	client *Client
 }
 
+//func (c Customers) CreateCustomer(createCustomerRequest CreateCustomerRequest) (*Customer, error) {
+//
+//	url := c.client.UrlMagento + urlCreateCustomer
+//	dataConvert, err := json.Marshal(createCustomerRequest)
+//	if err != nil {
+//		return nil, err
+//	}
+//
+//	resp, err := c.client.CreateRequestPostV2(url, dataConvert)
+//	if err != nil {
+//		log.Fatal(err)
+//	}
+//
+//	customer := Customer{}
+//	//-------------Đoạn này đang viết check lỗi
+//	//data, err := CheckResponse(resp)
+//	//if err != nil {
+//	//	log.Fatal(err)
+//	//}
+//	//
+//	//
+//	//if err == nil {
+//	//	log.Fatal(err)
+//	//}
+//	//--------------------------------------
+//	json.Unmarshal(resp, &customer)
+//	fmt.Println(string(resp))
+//	return &customer, nil
+//
+//}
 
 func (c Customers) CreateCustomer(createCustomerRequest CreateCustomerRequest) (*Customer, error) {
 
@@ -73,6 +103,7 @@ func (c Customers) CreateCustomer(createCustomerRequest CreateCustomerRequest) (
 		log.Fatal(err)
 	}
 
+
 	customer := Customer{}
 	//-------------Đoạn này đang viết check lỗi
 	//data, err := CheckResponse(resp)
@@ -85,8 +116,10 @@ func (c Customers) CreateCustomer(createCustomerRequest CreateCustomerRequest) (
 	//	log.Fatal(err)
 	//}
 	//--------------------------------------
+
 	json.Unmarshal(resp, &customer)
 	fmt.Println(string(resp))
 	return &customer, nil
 
 }
+

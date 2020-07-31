@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"flag"
-	"github.com/canhtuan97/week2/protobuff/customerpb"
 	"github.com/canhtuan97/week2/protobuff/cartpb"
+	"github.com/canhtuan97/week2/protobuff/customerpb"
+	invoicepb "github.com/canhtuan97/week2/protobuff/invoicepb"
 	orderPb "github.com/canhtuan97/week2/protobuff/orderpb"
+	"github.com/canhtuan97/week2/protobuff/shipmentpb"
 	"log"
 	"net/http"
 
@@ -15,7 +17,7 @@ import (
 )
 
 var (
-	grpcServerEndpoint = flag.String("grpc-server-endpoint",  "localhost:50069", "gRPC server endpoint")
+	grpcServerEndpoint = flag.String("grpc-server-endpoint", "localhost:50069", "gRPC server endpoint")
 )
 
 func run() error {
@@ -28,16 +30,24 @@ func run() error {
 	// Note: Make sure the gRPC server is running properly and accessible
 	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
-	err := customerPb.RegisterCustomerHandlerFromEndpoint(ctx, mux,  *grpcServerEndpoint, opts)
+	err := customerPb.RegisterCustomerHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts)
 	if err != nil {
 		return err
 	}
-	err1 := cartPb.RegisterAddItemProductHandlerFromEndpoint(ctx, mux,  *grpcServerEndpoint, opts)
+	err1 := cartPb.RegisterAddItemProductHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts)
 	if err1 != nil {
 		return err
 	}
-	err2 := orderPb.RegisterOrderHandlerFromEndpoint(ctx, mux,  *grpcServerEndpoint, opts)
+	err2 := orderPb.RegisterOrderHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts)
 	if err2 != nil {
+		return err
+	}
+	err3 := invoicepb.RegisterInvoiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts)
+	if err3 != nil {
+		return err
+	}
+	err4 := shipmentPb.RegisterShipmentHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts)
+	if err4 != nil {
 		return err
 	}
 	// Start HTTP server (and proto_demo calls to gRPC server endpoint)

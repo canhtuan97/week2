@@ -10,7 +10,7 @@ import (
 	"log"
 )
 
-func CreateOrder(ctx  context.Context ,request *orderPb.CreateOrderRequest) (*orderPb.CreateOrderResponse, error) {
+func CreateOrder(ctx context.Context, request *orderPb.CreateOrderRequest) (*orderPb.CreateOrderResponse, error) {
 	fmt.Println("CreateOrderRequest data running ...")
 	headers, _ := metadata.FromIncomingContext(ctx)
 	tokenCustomer := headers["authorization"]
@@ -34,18 +34,17 @@ func CreateOrder(ctx  context.Context ,request *orderPb.CreateOrderRequest) (*or
 		},
 	}
 
-
 	client := connector.NewClient()
 	quoteId := request.QuoteId
-	data, err := client.Order.CreateOrder(quoteId,tokenCustomer,createOrderRequest)
+	data, err := client.Order.CreateOrder(quoteId, tokenCustomer, createOrderRequest)
 	if err != nil {
-		log.Fatalf(" loi cua minh %v",err)
+		log.Fatalf(" loi cua minh %v", err)
 	}
 	fmt.Println(data)
 
 	resp := orderPb.CreateOrderResponse{
 		OrderId: data,
 	}
-	return &resp,nil
+	return &resp, nil
 
 }

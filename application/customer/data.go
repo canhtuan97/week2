@@ -66,6 +66,7 @@ func GetAccessTokenCustomer(request *customerPb.GetAccessTokenCustomerRequest) (
 	type GetTokenCustomerResponse struct {
 		Token string `json:"token"`
 	}
+
 	getTokenCustomerResponse := GetTokenCustomerResponse{}
 	json.Unmarshal(resp, &getTokenCustomerResponse)
 	fmt.Println("day la data", string(resp))

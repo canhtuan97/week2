@@ -31,7 +31,7 @@ type ConfigurableItemOptions struct {
 
 type Address struct {
 	Region        string   `json:"region"`
-	RegionId      int   `json:"region_id"`
+	RegionId      int      `json:"region_id"`
 	RegionCode    string   `json:"region_code"`
 	CountryId     string   `json:"country_id"`
 	Street        []string `json:"street"`
@@ -91,7 +91,7 @@ type Cart struct {
 type CartServices interface {
 	AddProductSimple(addItemSimpleRequest AddItemSimpleRequest) (*CartItem, error)
 	AddProductConfigurable(addProductConfigurableRequest AddProductConfigurableRequest) (*CartItem, error)
-	EstimateShipping(quoteId string,estimateShippingRequest EstimateShippingRequest) ([]*DataResponse, error)
+	EstimateShipping(quoteId string, estimateShippingRequest EstimateShippingRequest) ([]*DataResponse, error)
 }
 
 func (c Cart) AddProductSimple(addItemSimpleRequest AddItemSimpleRequest) (*CartItem, error) {
@@ -132,7 +132,7 @@ func (c Cart) AddProductConfigurable(addProductConfigurableRequest AddProductCon
 	return &cartItem, nil
 }
 
-func (c Cart) EstimateShipping(quoteId string,estimateShippingRequest EstimateShippingRequest) ([]*DataResponse, error) {
+func (c Cart) EstimateShipping(quoteId string, estimateShippingRequest EstimateShippingRequest) ([]*DataResponse, error) {
 	url := c.client.UrlMagento + urlEstimateShipping[0] + quoteId + urlEstimateShipping[1]
 
 	dataConvert, err := json.Marshal(estimateShippingRequest)
