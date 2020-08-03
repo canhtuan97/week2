@@ -19,7 +19,7 @@ message CreateInvoiceResponse{
 service Invoice {
   rpc CreateInvoice(CreateInvoiceRequest) returns (CreateInvoiceResponse) {
     option (google.api.http) = {
-      post: "/rest/V1/order/orderId/invoice"
+      post: "/create_invoice"
       body: "*"
     };
   }

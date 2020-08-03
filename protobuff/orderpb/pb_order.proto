@@ -34,7 +34,7 @@ message CreateOrderResponse {
 service Order {
   rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {
     option (google.api.http) = {
-      post: "/rest/V1/carts/mine/payment-information"
+      post: "/create_payment_id"
       body: "*"
     };
   }

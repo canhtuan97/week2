@@ -116,21 +116,21 @@ message EstimateShippingResponse {
 service AddItemProduct{
   rpc AddItemProductSimple(AddItemProductSimpleRequest) returns (AddItemProductSimpleResponse) {
     option (google.api.http) = {
-      post: "/rest/default/V1/carts/mine/items"
+      post: "/add_item_simple"
       body: "*"
     };
   }
 
   rpc AddItemProductConfigurable(AddItemProductConfigurableRequest) returns (AddItemProductConfigurableResponse) {
     option (google.api.http) = {
-      post: "/rest/default/V1/carts/mine/items/con"
+      post: "/add_item_configurable"
       body: "*"
     };
   }
 
   rpc EstimateShipping(EstimateShippingRequest) returns (EstimateShippingResponse) {
     option (google.api.http) = {
-      post: "/rest/V1/carts/mine/estimate-shipping-methods"
+      post: "/estimate_shipping"
       body: "*"
     };
   }

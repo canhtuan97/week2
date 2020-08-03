@@ -29,7 +29,7 @@ message CreateShipmentResponse{
 service Shipment {
   rpc CreateShipment(CreateShipmentRequest) returns (CreateShipmentResponse) {
     option (google.api.http) = {
-      post: "/rest/V1/order/orderId/ship"
+      post: "/create_shipment"
       body: "*"
     };
   }

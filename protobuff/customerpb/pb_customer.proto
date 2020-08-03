@@ -73,19 +73,19 @@ message  GetQuoteIdCustomerResponse{
 service Customer {
   rpc CreateCustomer(CreateCustomerRequest) returns (CreateCustomerResponse) {
     option (google.api.http) = {
-      post: "/V1/customers"
+      post: "/create_customer"
       body: "*"
     };
   }
   rpc GetAccessTokenCustomer(GetAccessTokenCustomerRequest) returns (GetAccessTokenCustomerResponse) {
     option (google.api.http) = {
-      post: "/V1/integration/customer/token"
+      post: "/get_token_customer"
       body: "*"
     };
   }
   rpc GetQuoteIdCustomer(GetQuoteIdCustomerRequest) returns (GetQuoteIdCustomerResponse) {
     option (google.api.http) = {
-      post: "/rest/V1/carts/mine"
+      post: "/get_quote"
       body: "*"
     };
   }
